@@ -1,0 +1,122 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Israel Korodele | Resume {% endblock %}
+
+{% block content %}
+<main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Resume</h1>
+              <p class="mb-0">My professional journey, education, and skills that I've acquired over the years.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Resume Section -->
+    <section id="resume" class="resume section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="resume-title">Summary</h3>
+            <div class="resume-item pb-0">
+              <h4>{{ config.owner_name }}</h4>
+              <p><em>{{ config.bio }}</em></p>
+              <ul>
+                {% if config.address %}<li>{{ config.address }}</li>{% endif %}
+                {% if config.phone %}<li>{{ config.phone }}</li>{% endif %}
+                <li>{{ config.email }}</li>
+              </ul>
+            </div><!-- End Resume Item -->
+
+            <h3 class="resume-title">Education</h3>
+            {% for education in educations %}
+            <div class="resume-item">
+              <h4>{{ education.degree }}</h4>
+              <h5>
+                {{ education.start_date|date:"Y" }} - 
+                {% if education.current %}Present{% else %}{{ education.end_date|date:"Y" }}{% endif %}
+              </h5>
+              <p><em>{{ education.institution }}</em></p>
+              {% if education.field_of_study %}<p>Field: {{ education.field_of_study }}</p>{% endif %}
+              {% if education.description %}<p>{{ education.description }}</p>{% endif %}
+            </div><!-- End Resume Item -->
+            {% endfor %}
+
+            <!-- Certifications Section -->
+            {% if certificates %}
+            <h3 class="resume-title">Certifications</h3>
+            {% for cert in certificates %}
+            <div class="resume-item">
+              <h4>{{ cert.name }}</h4>
+              <h5>{{ cert.issue_date|date:"F Y" }}{% if cert.expiration_date %} - {{ cert.expiration_date|date:"F Y" }}{% endif %}</h5>
+              <p><em>{{ cert.issuing_organization }}</em></p>
+              {% if cert.credential_id %}<p>Credential ID: {{ cert.credential_id }}</p>{% endif %}
+              {% if cert.credential_url %}
+              <a href="{{ cert.credential_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                View Credential
+              </a>
+              {% endif %}
+            </div><!-- End Resume Item -->
+            {% endfor %}
+            {% endif %}
+
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="resume-title">Professional Experience</h3>
+            {% for experience in work_experiences %}
+            <div class="resume-item">
+              <h4>{{ experience.position }}</h4>
+              <h5>
+                {{ experience.start_date|date:"F Y" }} - 
+                {% if experience.current %}Present{% else %}{{ experience.end_date|date:"F Y" }}{% endif %}
+              </h5>
+              <p><em>{{ experience.company }}</em></p>
+              {% if experience.description %}
+              <ul>
+                {% for item in experience.description.splitlines %}
+                  {% if item.strip %}
+                  <li>{{ item.strip }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div><!-- End Resume Item -->
+            {% endfor %}
+
+            <!-- Skills Section -->
+            <h3 class="resume-title mt-4">Skills</h3>
+            {% for category in skill_categories %}
+            <div class="resume-item">
+              <h4>{{ category.name }}</h4>
+              <div class="skills-container">
+                {% for skill in category.skill_set.all %}
+                <div class="skill-item mb-3">
+                  <div class="d-flex justify-content-between">
+                    <span>{{ skill.name }}</span>
+                    <span>{{ skill.proficiency }}%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ skill.proficiency }}%" 
+                         aria-valuenow="{{ skill.proficiency }}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div><!-- End Resume Item -->
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section><!-- /Resume Section -->
+
+</main>
+{% endblock %}

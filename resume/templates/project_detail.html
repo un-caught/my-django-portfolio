@@ -1,0 +1,75 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Israel Korodele | {{ project.title }}{% endblock %}
+
+{% block content %}
+<main class="main">
+    <div class="page-title" data-aos="fade">
+        <div class="heading">
+            <div class="container">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1>{{ project.title }}</h1>
+                        <p class="mb-0">{{ project.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="project-detail section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="project-images mb-4">
+                        <img src="{{ project.featured_image.url }}" class="img-fluid rounded mb-3" alt="{{ project.title }}">
+                        
+                        {% for image in project.images.all %}
+                        <img src="{{ image.image.url }}" class="img-fluid rounded mb-3" alt="{{ image.alt_text|default:project.title }}">
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="project-info card">
+                        <div class="card-body">
+                            <h3 class="card-title">Project Details</h3>
+                            <ul class="list-group list-group-flush">
+                                {% if project.technologies.all %}
+                                <li class="list-group-item">
+                                    <strong>Technologies:</strong>
+                                    {% for tech in project.technologies.all %}
+                                    <span class="badge bg-primary">{{ tech.name }}</span>
+                                    {% endfor %}
+                                </li>
+                                {% endif %}
+                                
+                                {% if project.date_completed %}
+                                <li class="list-group-item">
+                                    <strong>Completed:</strong> {{ project.date_completed|date:"F Y" }}
+                                </li>
+                                {% endif %}
+                                
+                                {% if project.github_url %}
+                                <li class="list-group-item">
+                                    <strong>GitHub:</strong> 
+                                    <a href="{{ project.github_url }}" target="_blank">View on GitHub</a>
+                                </li>
+                                {% endif %}
+                                
+                                {% if project.live_url %}
+                                <li class="list-group-item">
+                                    <strong>Live Demo:</strong> 
+                                    <a href="{{ project.live_url }}" target="_blank">View Live Project</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

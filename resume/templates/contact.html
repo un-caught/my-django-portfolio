@@ -1,0 +1,124 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Israel Korodele | Contact Me{% endblock title %}
+
+{% block content %}
+<main class="main">
+  <div class="page-title" data-aos="fade">
+    <div class="heading">
+      <div class="container">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-lg-8">
+            <h1>Contact</h1>
+            <p class="mb-0">Feel free to reach out to me for any questions or opportunities. I'll get back to you as soon as possible.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="contact" class="contact section">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row gy-4">
+        <div class="col-md-6">
+          <div class="info-item d-flex align-items-center">
+            <i class="icon bi bi-geo-alt flex-shrink-0"></i>
+            <div>
+              <h3>Address</h3>
+              <p>{{ config.address|default:"Not specified" }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="info-item d-flex align-items-center">
+            <i class="icon bi bi-telephone flex-shrink-0"></i>
+            <div>
+              <h3>Call Me</h3>
+              <p>{{ config.phone|default:"Not specified" }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="info-item d-flex align-items-center">
+            <i class="icon bi bi-envelope flex-shrink-0"></i>
+            <div>
+              <h3>Email Me</h3>
+              <p>{{ config.email }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="info-item d-flex align-items-center">
+            <i class="icon bi bi-share flex-shrink-0"></i>
+            <div>
+              <h3>Social Profiles</h3>
+              <div class="social-links">
+                {% if config.twitter_url %}<a href="{{ config.twitter_url }}"><i class="bi bi-twitter-x"></i></a>{% endif %}
+                {% if config.facebook_url %}<a href="{{ config.facebook_url }}"><i class="bi bi-facebook"></i></a>{% endif %}
+                {% if config.instagram_url %}<a href="{{ config.instagram_url }}"><i class="bi bi-instagram"></i></a>{% endif %}
+                {% if config.skype_url %}<a href="{{ config.skype_url }}"><i class="bi bi-skype"></i></a>{% endif %}
+                {% if config.linkedin_url %}<a href="{{ config.linkedin_url }}"><i class="bi bi-linkedin"></i></a>{% endif %}
+                {% if config.github_url %}<a href="{{ config.github_url }}"><i class="bi bi-github"></i></a>{% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <form method="post" action="{% url 'contact' %}" class="class_new mt-4" novalidate>
+        {% csrf_token %}
+        <div class="row gy-4">
+          <div class="col-md-6">
+            {{ form.name }}
+            {% if form.name.errors %}
+              <div class="invalid-feedback d-block">
+                  {{ form.name.errors|first }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="col-md-6">
+            {{ form.email }}
+            {% if form.email.errors %}
+              <div class="invalid-feedback d-block">
+                  {{ form.email.errors|first }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="col-md-12">
+            {{ form.subject }}
+            {% if form.subject.errors %}
+              <div class="invalid-feedback d-block">
+                  {{ form.subject.errors|first }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="col-md-12">
+            {{ form.message }}
+            {% if form.message.errors %}
+              <div class="invalid-feedback d-block">
+                  {{ form.message.errors|first }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="col-md-12 text-center">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="sent-message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+            <button type="submit">Send Message</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+{% endblock content %}

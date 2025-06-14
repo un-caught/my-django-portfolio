@@ -1,0 +1,7 @@
+
+cloudinary==1.44.0
+Django==5.2.2
+django-cloudinary-storage==0.3.0
+django-storages==1.14.6
+pillow==11.2.1
+whitenoise==6.9.0

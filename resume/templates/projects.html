@@ -1,0 +1,88 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Israel Korodele | Django Web Developer - Portfolio{% endblock title %}
+
+{% block content %}
+<main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Portfolio</h1>
+              <p class="mb-0">Here are some of my recent projects showcasing my skills and experience.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio section">
+  <div class="container">
+    <!-- Portfolio Filters -->
+    <ul class="portfolio-filters d-flex justify-content-center flex-wrap mb-4" data-aos="fade-up" data-aos-delay="100">
+      <li data-filter="*" class="filter-active mx-2 mb-2">All</li>
+      {% for tech in technologies %}
+      <li data-filter=".filter-{{ tech.slug }}" class="mx-2 mb-2">{{ tech.name }}</li>
+      {% endfor %}
+    </ul><!-- End Portfolio Filters -->
+
+    <!-- Portfolio Cards -->
+    <div class="row gy-4" data-aos="fade-up" data-aos-delay="200">
+      {% for project in projects %}
+      <div class="col-lg-4 col-md-6 portfolio-item {% for tech in project.technologies.all %}filter-{{ tech.slug }} {% endfor %}">
+        <div class="card h-100">
+          <!-- Project Image -->
+          <img src="{{ project.featured_image.url }}" class="card-img-top" alt="{{ project.title }}">
+          
+          <!-- Card Body -->
+          <div class="card-body">
+            <h5 class="card-title">{{ project.title }}</h5>
+            <p class="card-text">{{ project.description|truncatewords:15 }}</p>
+            
+            <!-- Technologies Badges -->
+            <div class="mb-3">
+              {% for tech in project.technologies.all %}
+              <span class="badge bg-primary me-1">{{ tech.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          
+          <!-- Card Footer with Links -->
+          <div class="card-footer bg-transparent border-top-0">
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- Lightbox Gallery Trigger -->
+              <a href="{{ project.featured_image.url }}" 
+                 title="{{ project.title }}" 
+                 data-gallery="portfolio-gallery-{{ project.slug }}" 
+                 class="glightbox btn btn-sm btn-outline-primary">
+                <i class="bi bi-zoom-in me-1"></i> View
+              </a>
+              
+              <!-- Project Details Link -->
+              <a href="{{ project.get_absolute_url }}" class="btn btn-sm btn-primary">
+                Details <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Portfolio Card -->
+      
+      <!-- Additional images for lightbox gallery (hidden) -->
+      {% for image in project.images.all %}
+      <div class="d-none">
+        <a href="{{ image.image.url }}" 
+           title="{{ project.title }}" 
+           data-gallery="portfolio-gallery-{{ project.slug }}" 
+           class="glightbox"></a>
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div><!-- End Portfolio Cards -->
+  </div>
+</section><!-- /Portfolio Section -->
+</main>
+{% endblock content %}
