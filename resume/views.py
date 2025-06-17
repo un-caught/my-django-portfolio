@@ -63,8 +63,8 @@ def contact(request):
                     Email: {form.cleaned_data['email']}
                     Message: {form.cleaned_data['message']}
                     """,
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[settings.EMAIL_HOST_USER],
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.DEFAULT_FROM_EMAIL],
                 fail_silently=False,
             )
             messages.success(request, 'Your message has been sent successfully!')
