@@ -66,9 +66,9 @@
         <div class="copyright">
                 <p>&copy; 2025 Israel Korodele. All rights reserved.</p>
                 <nav>
-                    <a href="#about">About</a> |
-                    <a href="#projects">Projects</a> |
-                    <a href="#contact">Contact</a>
+                    <a href="{% url 'about' %}">About</a> |
+                    <a href="{% url 'projects' %}">Projects</a> |
+                    <a href="{% url 'contact' %}t">Contact</a>
                 </nav>
                 <div class="social-icons">
                     <a href="{{ config.github_url }}" target="_blank">GitHub</a>
