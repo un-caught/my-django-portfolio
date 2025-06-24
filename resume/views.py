@@ -12,12 +12,18 @@ def home(request):
 
 def about(request):
     config = SiteConfiguration.load()
-    skills = Skill.objects.all().order_by('order')
+    skills = list(Skill.objects.all().order_by('order'))
     interests = Interest.objects.all()
     testimonial = Testimonial.objects.all()
+
+    half = (len(skills) + 1) // 2  # split index (ceil division)
+
+    skills_left = skills[:half]
+    skills_right = skills[half:]
     context = {
         'config': config,
-        'skills': skills,
+        'skills_left': skills_left,
+        'skills_right': skills_right,
         'interests': interests,
         'testimonial': testimonial,
         }
